@@ -1,12 +1,13 @@
-import express, { NextFunction, Request, Response } from 'express';
+import express, { Request, Response } from 'express';
 import cors from 'cors';
 import 'dotenv/config';
 import cookieParser from 'cookie-parser';
 
-import authRouter from './routes/insertRoute';
+import insertRouter from './routes/insertRoute';
 import { pool } from './modal/database';
 import { Error } from '../types';
-import table from './modal/table';
+import pricingRouter from './routes/pricingRoute';
+// import table from './modal/table';
 
 const app = express();
 
@@ -28,11 +29,12 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors({ origin: process.env.FRONTEND_URL, credentials: true }));
 app.use(cookieParser());
 
-app.use('/api', authRouter);
+app.use('/api', insertRouter);
+app.use('/api', pricingRouter);
 
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
+app.use((err: Error, req: Request, res: Response) => {
   const statusCode = err.statusCode || 500;
-  let message = err.message || 'Something went wrong';
+  const message = err.message || 'Something went wrong';
 
   return res.status(statusCode).json({
     status: 'failed',

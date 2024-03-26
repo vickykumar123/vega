@@ -28,17 +28,17 @@ export async function insertData(
     ) {
       return next(appError(400, 'Invaild inputs'));
     }
-    const insertIntoOrganization = await pool.query(
+    await pool.query(
       'INSERT INTO organization(name) values($1) RETURNING id, name',
       [name]
     );
 
-    const insertIntoItems = await pool.query(
-      'INSERT INTO item(type,description) values($1,$2)',
-      [type, description]
-    );
-    const insertIntoPrice = await pool.query(
-      'INSERT INTO pricing(organization_id, item_id,base_distance_in_km,base_price,km_price,zone)  SELECT o.id AS organization_id, i.id AS item_id, $3, $4, $5, $6 FROM organization o CROSS JOIN item i WHERE o.name = $1 AND i.type = $2 AND i.description = $7;',
+    await pool.query('INSERT INTO item(type,description) values($1,$2)', [
+      type,
+      description,
+    ]);
+    await pool.query(
+      'INSERT INTO pricing(organization_id, item_id,base_distance_in_km,base_price,km_price,zone)  SELECT o.id AS organization_id, i.id AS item_id, $3, $4, $5, $6 FROM organization o INNER JOIN item i  ON o.id = i.id AND i.type = $2 AND i.description = $7 WHERE o.name = $1;',
       [name, type, base_distance_in_km, base_price, km_price, zone, description]
     );
 

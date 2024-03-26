@@ -1,4 +1,4 @@
-import { pool } from './database';
+import { pool } from '../modal/database';
 
 class TableService {
   async createTables() {

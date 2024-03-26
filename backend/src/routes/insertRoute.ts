@@ -1,8 +1,8 @@
-import express from "express";
-import {insertData} from "../controller/insertData";
+import express from 'express';
+import { insertData } from '../controller/insertData';
 
-const authRouter = express.Router();
+const insertRouter = express.Router();
 
-authRouter.post("/insert", insertData);
+insertRouter.post('/insert', insertData);
 
-export default authRouter;
+export default insertRouter;
