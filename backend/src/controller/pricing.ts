@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
 import { appError } from '../lib/error';
-// import { pool } from '../modal/database';
 import pricing from '../classes/pricing';
 import { pool } from '../modal/database';
 
@@ -16,8 +15,6 @@ export async function calculatePricing(
       return next(appError(400, 'Organization ID is missing'));
     }
 
-    console.log(zone, total_distance, item_type);
-
     if (!zone || !total_distance || !item_type) {
       return next(appError(400, 'Invalid Input'));
     }
@@ -27,7 +24,7 @@ export async function calculatePricing(
     );
     const priceData = getOrganizationPrice.rows[0];
     const totalPrice = pricing.calculateTotalPrice(
-      priceData.base_price,
+      priceData?.base_price,
       total_distance,
       item_type
     );

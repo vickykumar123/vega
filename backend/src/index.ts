@@ -7,7 +7,7 @@ import insertRouter from './routes/insertRoute';
 import { pool } from './modal/database';
 import { Error } from '../types';
 import pricingRouter from './routes/pricingRoute';
-// import table from './modal/table';
+// import table from './classes/table';
 
 const app = express();
 

@@ -1,9 +1,6 @@
 import { Pool } from 'pg';
 
-if (process.env.DATABASE_URL === undefined) {
-  process.env.DATABASE_URL = '';
-}
-export const pool = process.env.DATABASE_URL
+export const pool = process.env.DATABASE_URL!
   ? new Pool({
       connectionString: process.env.DATABASE_URL,
       ssl: { rejectUnauthorized: false },

@@ -1,5 +1,3 @@
-// priceCalculator.js
-
 class PriceCalculator {
   baseDistance: number;
   basePrice: number;
@@ -7,10 +5,11 @@ class PriceCalculator {
   nonPerishableKmPrice: number;
 
   constructor() {
-    this.baseDistance = 5; // Base distance in km
-    this.basePrice = 10; // Base price in euros
-    this.perishableKmPrice = 1.5; // Per km price for perishable items in euros
-    this.nonPerishableKmPrice = 1; // Per km price for non-perishable items in euros
+    // all the price in euros
+    this.baseDistance = 5;
+    this.basePrice = 10;
+    this.perishableKmPrice = 1.5;
+    this.nonPerishableKmPrice = 1;
   }
 
   calculateTotalPrice(
