@@ -1,6 +1,10 @@
 # Food Delivery Application
 
 This is a Food Delivery application with backend and frontend components.
+## Hosted On
+Render.com : https://vega-ag55.onrender.com/
+
+
 ## API Documentation
 View the [API Documentation](https://documenter.getpostman.com/view/29588496/2sA35EZ33h#59c21593-0707-42e4-97aa-41a7990d5c3c)
 
