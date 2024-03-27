@@ -35,7 +35,7 @@ export async function getOrganizationById(
     }
 
     const query = await pool.query(
-      `SELECT * from organization as o inner join item i on o.id = i.id where o.id = $1`,
+      `SELECT p.zone,name,description,p.zone,i.type,p.base_price,p.km_price from organization as o inner join item i on o.id = i.id inner join pricing p on p.organization_id = o.id where o.id = $1`,
       [organizationId]
     );
     const data = query.rows;

@@ -11,19 +11,27 @@ interface OrganizationData {
 
 function Home() {
   const [organization, setOrganization] = useState<OrganizationData[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
   async function getOrganization() {
     try {
+      setIsLoading(true);
       const response = await fetch(`${API_URL}/api`);
       const data = await response.json();
       setOrganization(data.response);
     } catch (err) {
       console.log(err);
+    } finally {
+      setIsLoading(false);
     }
   }
   useEffect(() => {
     getOrganization();
   }, []);
+
+  if (isLoading) {
+    return <div className="text-center">Loading...</div>;
+  }
 
   if (organization.length === 0) {
     return <div>No Organisation Found</div>;

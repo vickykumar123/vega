@@ -17,20 +17,21 @@ export default function Organisation() {
     register,
     watch,
     handleSubmit,
-    formState: {errors},
+    formState: {errors, isSubmitting},
+    setValue,
   } = useForm<InputForm>({
     defaultValues: {
       name: "",
       type: "perishable",
       base_distance_in_km: 5,
       base_price: 10,
-      km_price: 1.5,
       zone: "",
     },
   });
-
+  const isLoading = isSubmitting;
   const typeWatch = watch("type");
   const navigate = useNavigate();
+  setValue("km_price", typeWatch === "perishable" ? 1.5 : 1);
 
   const onSubmit = async (data: InputForm) => {
     try {
@@ -45,6 +46,7 @@ export default function Organisation() {
         throw new Error("Something went wrong");
       }
       const responseData = await response.json();
+      console.log(data);
       if (responseData.status == "success") navigate("/");
     } catch (error) {
       console.log(error);
@@ -78,8 +80,8 @@ export default function Organisation() {
                 Non-Perishable
               </option>
             </select>
-            {errors.description && (
-              <span className="text-red-500">{errors.description.message}</span>
+            {errors.type && (
+              <span className="text-red-500">{errors.type.message}</span>
             )}
           </label>
           <label className="text-white text-sm font-bold flex-1">
@@ -127,9 +129,7 @@ export default function Organisation() {
               min={1}
               disabled
               value={typeWatch === "perishable" ? 1.5 : 1}
-              {...register("km_price", {
-                required: "This field is required",
-              })}
+              {...register("km_price")}
             />
             {errors.km_price && (
               <span className="text-red-500">{errors.km_price.message}</span>
@@ -148,8 +148,9 @@ export default function Organisation() {
             )}
           </label>
           <button
+            disabled={isLoading}
             type="submit"
-            className="bg-indigo-500 p-1 rounded-md font-semibold"
+            className="bg-indigo-500 p-1 rounded-md font-semibold disabled:opacity-70"
           >
             Create Organization
           </button>

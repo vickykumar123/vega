@@ -9,8 +9,7 @@ export async function calculatePricing(
   next: NextFunction
 ) {
   try {
-    const { zone, total_distance, item_type } = req.body;
-    const { organization_id } = req.params;
+    const { id: organization_id, zone, total_distance, item_type } = req.body;
     if (!organization_id) {
       return next(appError(400, 'Organization ID is missing'));
     }
