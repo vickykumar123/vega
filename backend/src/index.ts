@@ -7,6 +7,7 @@ import insertRouter from './routes/insertRoute';
 import { pool } from './modal/database';
 import { Error } from '../types';
 import pricingRouter from './routes/pricingRoute';
+import organizationRouter from './routes/organizationRoute';
 // import table from './classes/table';
 
 const app = express();
@@ -31,6 +32,7 @@ app.use(cookieParser());
 
 app.use('/api', insertRouter);
 app.use('/api', pricingRouter);
+app.use('/api', organizationRouter);
 
 app.use((err: Error, req: Request, res: Response) => {
   const statusCode = err.statusCode || 500;
