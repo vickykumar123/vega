@@ -22,3 +22,27 @@ export async function getAllOrganization(
     next(error);
   }
 }
+
+export async function getOrganizationById(
+  req: Request,
+  res: Response,
+  next: NextFunction
+) {
+  try {
+    const { organizationId } = req.params;
+    if (!organizationId) {
+      return next(appError(400, 'Organization ID is missing '));
+    }
+
+    const query = await pool.query(
+      `SELECT * from organization as o inner join item i on o.id = i.id where o.id = $1`,
+      [organizationId]
+    );
+    const data = query.rows;
+    res.status(200).json({
+      data,
+    });
+  } catch (error) {
+    next(error);
+  }
+}

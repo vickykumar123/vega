@@ -28,6 +28,9 @@ export async function insertData(
     ) {
       return next(appError(400, 'Invaild inputs'));
     }
+    if (km_price !== 1.5 && km_price !== 1) {
+      return next(appError(400, 'Price per km is invalid'));
+    }
     if (base_price < 10) {
       return next(appError(400, 'Base value cant be less than 10'));
     }
